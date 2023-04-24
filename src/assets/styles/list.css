@@ -1,0 +1,16 @@
+.list-paper {
+  background-color: var(--primary-contrast-text) !important;
+  margin-top: 3.5rem;
+}
+
+.list-entity-title {
+  color: var(--primary-light) !important;
+}
+
+.list-entity-icon {
+  margin: 0.8rem 0 0 0.5rem;
+}
+
+.list-table-header-cell {
+  text-align: right;
+}
