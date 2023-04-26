@@ -6,20 +6,22 @@ import SvgIcon from '@mui/material/SvgIcon'
 import { ReactComponent as Logo } from '@/assets/images/planets.svg'
 import DarkModeToggle from './DarkModeToggle'
 
-import '@/assets/styles/header.css'
+import useStyles from './classes'
 
 const Header: FC = () => {
+  const classes = useStyles()
+
   return (
-    <AppBar position='fixed' className='app-header'>
+    <AppBar position='fixed' className={classes.appHeader}>
       <Container maxWidth='xl'>
-        <Toolbar sx={{ color: 'primary.contrastText' }}>
-          <SvgIcon className='app-header__logo'>
+        <Toolbar className={classes.appHeaderToolbar}>
+          <SvgIcon className={classes.appHeaderLogo}>
             <Logo />
           </SvgIcon>
-          <Typography variant='h6' noWrap component='a' href='/' className='app-header__title'>
+          <Typography variant='h6' noWrap component='a' href='/' className={classes.appHeaderTitle}>
             Star Wars Search
           </Typography>
-          <Box className='app-header__toggle'>
+          <Box className={classes.appHeaderToggle}>
             <DarkModeToggle />
           </Box>
         </Toolbar>

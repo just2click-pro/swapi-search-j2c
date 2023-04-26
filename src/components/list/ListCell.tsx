@@ -1,6 +1,6 @@
 import React, { FC, forwardRef, useImperativeHandle, useState } from 'react'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import * as MUIcon from '@mui/icons-material'
 import IconButton from '@mui/material/IconButton'
@@ -28,10 +28,12 @@ const IconComp: React.FC<IconProps> = ({ icon }) => {
   return <Icon />
 }
 
-interface ListCellProps {
+export type ListCellProps = {
+  key?: string
   data: any
   attributes: string[]
   handleItemDelete: () => void
+  ref?: React.ForwardedRef<OpenAddDialog>
 }
 
 const ListCell: FC<ListCellProps> = forwardRef<OpenAddDialog, ListCellProps>(

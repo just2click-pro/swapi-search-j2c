@@ -13,13 +13,15 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 
 import { isStringArray } from '@/utils'
+import Highlighted from '@/components/highlighted/Highlighted'
 
 import '@/assets/styles/search.css'
 
 export interface ISearchResultProps {
-  results: string[] | unknown[]
+  results: string[] | unknown[] | unknown
   entity: string
   maxResults?: number
+  search?: string
 }
 
 const EntityLink: FC<{ entity: string; children: any }> = ({ entity, children }) => (
@@ -28,8 +30,9 @@ const EntityLink: FC<{ entity: string; children: any }> = ({ entity, children })
   </Link>
 )
 
-const SearchResults: FC<ISearchResultProps> = ({ results, entity, maxResults = 3 }) => {
-  if (!isStringArray(results) || results.length === 0) {
+const SearchResults: FC<ISearchResultProps> = ({ results, entity, maxResults = 3, search }) => {
+  const resultsArray = results as string[]
+  if (!isStringArray(resultsArray) || resultsArray.length === 0) {
     return null
   }
 
@@ -48,11 +51,17 @@ const SearchResults: FC<ISearchResultProps> = ({ results, entity, maxResults = 3
         </EntityLink>
       </Box>
       <List>
-        {results.slice(0, maxResults).map((result: string) => (
-          <ListItem key={uuid()}>
-            <ListItemText primary={result} />
-          </ListItem>
-        ))}
+        {resultsArray.slice(0, maxResults).map((result: string) => {
+          const highlight = { text: result, search }
+
+          return (
+            <ListItem key={uuid()}>
+              <ListItemText>
+                <Highlighted highlight={highlight} />
+              </ListItemText>
+            </ListItem>
+          )
+        })}
       </List>
     </Container>
   )

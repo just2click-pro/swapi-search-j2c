@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import { useTheme } from '@mui/material/styles'
 
@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 
 import DialogEditData from './DialogEditData'
 
-import '@/assets/styles/dialog.css'
+import useStyles from './classes'
 
 export type DialogType = 'add' | 'update' | 'delete'
 
@@ -31,6 +31,7 @@ const CommonDialog: FC<{
   id?: string
 }> = ({ type, attributes, data, open, close, handleAddItem, handleEditItem, handleDeleteItem, id }) => {
   const theme = useTheme()
+  const classes = useStyles()
 
   // Only relates to 'add' type
   const initialState = attributes
@@ -90,8 +91,8 @@ const CommonDialog: FC<{
 
   return (
     <Dialog open={open} onClose={close}>
-      <Container sx={{ backgroundColor: `${theme.palette.primary.contrastText}` }}>
-        <DialogTitle>{title}</DialogTitle>
+      <Container className={classes.container}>
+        <DialogTitle className={classes.dialogTitle}>{title}</DialogTitle>
         <DialogContent sx={{ width: '100%', padding: 0 }}>
           {type === 'update' ? (
             <DialogEditData attributes={attributes} data={data} handleChange={handleChange} />
@@ -102,10 +103,10 @@ const CommonDialog: FC<{
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSubmit} className='submit-button'>
+          <Button onClick={handleSubmit} className={classes.mainBtn} variant='outlined'>
             {submitButtonText}
           </Button>
-          <Button onClick={() => close()} className='cancel-button'>
+          <Button onClick={() => close()} className={classes.cancelBtn}>
             Cancel
           </Button>
         </DialogActions>

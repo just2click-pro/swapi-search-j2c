@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, useRef } from 'react'
+import { FC, useEffect, useState, useRef } from 'react'
 
 import { useTheme } from '@mui/material/styles'
 
@@ -20,6 +20,7 @@ import ListHeader from './ListHeader'
 import ListCell from './ListCell'
 
 import '@/assets/styles/list.css'
+import useStyles from './classes'
 
 export interface OpenAddDialog {
   openAddDialog(): void
@@ -28,6 +29,7 @@ export interface OpenAddDialog {
 const List: FC<{ entityInfo: IEntitiesInfo }> = ({ entityInfo }) => {
   const theme = useTheme()
   const listCellRef = useRef<OpenAddDialog>(null)
+  const classes = useStyles()
 
   const [data, setData] = useState([])
 
@@ -47,9 +49,9 @@ const List: FC<{ entityInfo: IEntitiesInfo }> = ({ entityInfo }) => {
 
   return (
     <Box>
-      <Paper className='list-paper'>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box sx={{ display: 'flex' }}>
+      <Paper className={classes.listPaper}>
+        <Box className={classes.listPaperTopBox}>
+          <Box className={classes.listPaperInnerBox}>
             <DynamicSvgIcon
               iconName={entityInfo.name}
               svgProps={{
@@ -60,12 +62,12 @@ const List: FC<{ entityInfo: IEntitiesInfo }> = ({ entityInfo }) => {
               }}
               wrappedStyle='list-entity-icon'
             />
-            <Typography sx={{ color: theme => theme.palette.primary.main, margin: '0.5rem' }} variant='h4'>
+            <Typography className={classes.listHeaderTitle} variant='h4'>
               {entityInfo.title}
             </Typography>
           </Box>
           <IconButton
-            sx={{ width: '2.5rem', height: '2.5rem', margin: '0.5rem' }}
+            className={classes.listIconButton}
             onClick={() => {
               listCellRef.current?.openAddDialog()
             }}
@@ -74,7 +76,7 @@ const List: FC<{ entityInfo: IEntitiesInfo }> = ({ entityInfo }) => {
           </IconButton>
         </Box>
 
-        <Table className='list-table'>
+        <Table>
           <ListHeader attributes={entityInfo.attributes} />
           <TableBody>
             {data.map((item: any) => (

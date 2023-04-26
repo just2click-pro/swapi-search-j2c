@@ -4,7 +4,7 @@ import { TextField } from '@mui/material'
 
 import { convertUnderscoresToSpaces } from '@/utils'
 
-import '@/assets/styles/dialog.css'
+import useStyles from './classes'
 
 const DialogEditData: FC<{
   attributes: string[]
@@ -12,6 +12,7 @@ const DialogEditData: FC<{
   handleChange: (attribute: string, value: string) => void
 }> = ({ attributes, data, handleChange }) => {
   const [item, setItem] = useState(data)
+  const classes = useStyles()
 
   const handleChangeLocal = (attribute: string, value: string) => {
     setItem((prev: any) => ({
@@ -29,7 +30,7 @@ const DialogEditData: FC<{
           sx={{ margin: '0.5rem', width: '47%' }}
           required
           key={attribute}
-          className='text-field'
+          className={classes.textField}
           label={convertUnderscoresToSpaces(attribute)}
           placeholder={convertUnderscoresToSpaces(attribute)}
           inputProps={{ maxLength: 15 }}

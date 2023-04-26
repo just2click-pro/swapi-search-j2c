@@ -7,18 +7,19 @@ import Header from '@/components/header/Header'
 import Search from '@/components/search/Search'
 import List from '@/components/list/List'
 
-import '@/assets/styles/home.css'
+import useStyles from './classes'
 
 import { entitiesInfo, IEntitiesInfo } from '@/assets/data/entities'
 
 const Home: FC = () => {
   const location = useLocation()
+  const classes = useStyles()
 
   return (
     <>
       <Header />
       <TransitionGroup>
-        <CSSTransition key={location.key} className='fade' timeout={300}>
+        <CSSTransition key={location.key} className={classes.fade} timeout={300}>
           <Routes>
             <Route path='/' element={<Search />} />
             {entitiesInfo.map((entitiesInfo: IEntitiesInfo) => (

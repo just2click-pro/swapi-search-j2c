@@ -83,7 +83,7 @@ const Search: FC = () => {
         >
           <Box className='result-popup'>
             {entities.map((entity: string) => (
-              <SearchResults results={searchResults[entity]} entity={entity} key={entity} />
+              <SearchResults results={searchResults[entity]} entity={entity} key={entity} search={searchTerm} />
             ))}
           </Box>
         </Popover>
