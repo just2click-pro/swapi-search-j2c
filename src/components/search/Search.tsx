@@ -14,12 +14,14 @@ import { entities } from '@/assets/data/entities'
 import SearchResults from './SearchResults'
 
 import '@/assets/styles/search.css'
+import useStyles from './classes'
 
 const Search: FC = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState<resultsPerEntityType>({})
   const [open, setOpen] = useState(false)
   const searchTextRef = useRef(null)
+  const classes = useStyles()
 
   const handleChange = (event: { target: { value: SetStateAction<string> } }) => {
     setSearchTerm(event.target.value)
@@ -27,6 +29,18 @@ const Search: FC = () => {
 
   const handlePopoverClose = () => {
     setOpen(false)
+  }
+
+  const hasAnyResults = (): boolean => {
+    let returnValue = false
+    entities.some((entity: string) => {
+      const results = searchResults[entity] as Array<resultsPerEntityType>
+      if (results && results.length > 0) {
+        returnValue = true
+      }
+    })
+
+    return returnValue
   }
 
   useEffect(() => {
@@ -46,7 +60,7 @@ const Search: FC = () => {
   }, [searchTerm])
 
   return (
-    <div className='search'>
+    <div className={classes.search}>
       <Container maxWidth='md' sx={{ mt: 10 }}>
         <TextField
           type='search'
@@ -65,28 +79,29 @@ const Search: FC = () => {
             )
           }}
         />
-        <Popover
-          open={open}
-          className='search-popup'
-          anchorEl={searchTextRef.current}
-          anchorReference='anchorEl'
-          onClose={handlePopoverClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center'
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center'
-          }}
-          disableAutoFocus
-        >
-          <Box className='result-popup'>
-            {entities.map((entity: string) => (
-              <SearchResults results={searchResults[entity]} entity={entity} key={entity} search={searchTerm} />
-            ))}
-          </Box>
-        </Popover>
+        {hasAnyResults() && (
+          <Popover
+            open={open}
+            anchorEl={searchTextRef.current}
+            anchorReference='anchorEl'
+            onClose={handlePopoverClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center'
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center'
+            }}
+            disableAutoFocus
+          >
+            <Box>
+              {entities.map((entity: string) => (
+                <SearchResults results={searchResults[entity]} entity={entity} key={entity} search={searchTerm} />
+              ))}
+            </Box>
+          </Popover>
+        )}
       </Container>
     </div>
   )

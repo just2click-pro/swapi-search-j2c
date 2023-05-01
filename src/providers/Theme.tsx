@@ -1,36 +1,24 @@
-import { FC, useContext, useMemo } from 'react'
+import { FC, ReactNode, useContext, useMemo } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles'
 
 import { ChosenTheme } from './ChosenTheme'
+import * as Colors from './constants'
 
-export const ThemeProvider: FC<any> = ({ children }) => {
+export const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { theme } = useContext(ChosenTheme)
-  const muiTheme = useMemo(() => createThemeHelper(theme), [theme])
+  const mainTheme = useMemo(() => createThemeHelper(theme), [theme])
 
   return (
-    <MuiThemeProvider theme={muiTheme}>
+    <MuiThemeProvider theme={mainTheme}>
       <CssBaseline />
       {children}
     </MuiThemeProvider>
   )
 }
 
-const brandColor = 'rgb(255, 227, 0)'
-const darkBrandColor = 'rgb(39, 43, 48)'
-
-const textBackgroundColor = 'rgb(245, 245, 245)'
-
-const buttonsTextColor = 'rgb(255,255,255)'
-
-const successMainBackground = 'rgb(76, 175, 80)'
-const successHoverColor = 'rgb(67, 160, 71)'
-
-const cancelMainBackground = 'rgb(244, 67, 54)'
-const cancelHoverColor = 'rgb(229, 57, 53)'
-
 const createThemeHelper = (theme: 'dark' | 'light') => {
-  const isDark = theme === 'dark'
+  const isDarkTheme = theme === 'dark'
   return createTheme({
     typography: {
       fontFamily: [
@@ -46,28 +34,28 @@ const createThemeHelper = (theme: 'dark' | 'light') => {
     palette: {
       mode: theme,
       background: {
-        default: isDark ? '#303030' : '#f0f0f0',
-        paper: isDark ? brandColor : darkBrandColor
+        default: isDarkTheme ? Colors.DEFAULT_DARK_COLOR : Colors.DEFAULT_COLOR,
+        paper: isDarkTheme ? Colors.BRAND_COLOR : Colors.DARK_COLOR
       },
       primary: {
-        main: isDark ? brandColor : darkBrandColor,
-        contrastText: isDark ? darkBrandColor : brandColor,
-        dark: darkBrandColor,
-        light: brandColor
+        main: isDarkTheme ? Colors.BRAND_COLOR : Colors.DARK_COLOR,
+        contrastText: isDarkTheme ? Colors.DARK_COLOR : Colors.BRAND_COLOR,
+        dark: Colors.DARK_COLOR,
+        light: Colors.BRAND_COLOR
       },
       secondary: {
-        main: isDark ? darkBrandColor : textBackgroundColor,
-        contrastText: isDark ? textBackgroundColor : darkBrandColor
+        main: isDarkTheme ? Colors.DARK_COLOR : Colors.BACKGROUND_COLOR,
+        contrastText: isDarkTheme ? Colors.BACKGROUND_COLOR : Colors.DARK_COLOR
       },
       error: {
-        main: cancelMainBackground,
-        contrastText: buttonsTextColor,
-        light: cancelHoverColor
+        main: Colors.CANCEL_BACKGROUND_COLOR,
+        contrastText: Colors.BUTTON_COLOR,
+        light: Colors.CANCEL_HOVER_COLOR
       },
       success: {
-        main: successMainBackground,
-        contrastText: buttonsTextColor,
-        light: successHoverColor
+        main: Colors.SUCCESS_BACKGROUND_COLOR,
+        contrastText: Colors.BUTTON_COLOR,
+        light: Colors.SUCCESS_HOVER_COLOR
       }
     }
   })

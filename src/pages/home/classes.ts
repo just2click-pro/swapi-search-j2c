@@ -1,6 +1,6 @@
 import { makeStyles } from '@mui/styles'
 
-const useStyles = makeStyles((theme?: any) => ({
+const useStyles = makeStyles(() => ({
   fade: {
     '&.fade-enter': {
       opacity: 0
@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme?: any) => ({
       opacity: 1,
       transition: 'opacity 300ms ease-in'
     },
-    '&:fade-exit': {
+    '&.fade-exit': {
       opacity: 1
     },
     '&.fade-exit-active': {
