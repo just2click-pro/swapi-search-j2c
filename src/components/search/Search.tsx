@@ -79,29 +79,31 @@ const Search: FC = () => {
             )
           }}
         />
-        {hasAnyResults() && (
-          <Popover
-            open={open}
-            anchorEl={searchTextRef.current}
-            anchorReference='anchorEl'
-            onClose={handlePopoverClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'center'
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'center'
-            }}
-            disableAutoFocus
-          >
-            <Box>
+        <Popover
+          open={open}
+          anchorEl={searchTextRef.current}
+          anchorReference='anchorEl'
+          onClose={handlePopoverClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center'
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center'
+          }}
+          disableAutoFocus
+        >
+          {hasAnyResults() ? (
+            <Box className={classes.searchResultsBox}>
               {entities.map((entity: string) => (
                 <SearchResults results={searchResults[entity]} entity={entity} key={entity} search={searchTerm} />
               ))}
             </Box>
-          </Popover>
-        )}
+          ) : (
+            <Box className={classes.emptyText}>Hmm, search, we did. Found, nothing, we have.</Box>
+          )}
+        </Popover>
       </Container>
     </div>
   )

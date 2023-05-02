@@ -9,6 +9,15 @@ const useStyles = makeStyles((theme?: any) => ({
     justifyContent: 'center',
     padding: '1rem',
     textAlign: 'center'
+  },
+  searchResultsBox: {
+    maxHeight: '70vh',
+    overflow: 'auto'
+  },
+  emptyText: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '1rem'
   }
 }))
 
